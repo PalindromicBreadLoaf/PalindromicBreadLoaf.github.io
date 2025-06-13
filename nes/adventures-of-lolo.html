@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Adventures of Lolo - Review</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(
+                    135deg,
+                    #8b0000 0%,
+                    #dc143c 50%,
+                    #ff6347 100%
+                );
+                min-height: 100vh;
+                color: white;
+                line-height: 1.6;
+            }
+
+            .container {
+                max-width: 900px;
+                margin: 0 auto;
+                padding: 2rem;
+            }
+
+            .header {
+                text-align: center;
+                margin-bottom: 3rem;
+            }
+
+            .back-button {
+                position: absolute;
+                top: 2rem;
+                left: 2rem;
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                color: white;
+                padding: 0.75rem 1.5rem;
+                border-radius: 50px;
+                text-decoration: none;
+                backdrop-filter: blur(10px);
+                transition: all 0.3s ease;
+            }
+
+            .back-button:hover {
+                background: rgba(255, 255, 255, 0.2);
+                transform: translateY(-2px);
+            }
+
+            .game-title {
+                font-size: 3rem;
+                font-weight: 800;
+                margin-bottom: 0.5rem;
+                text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            }
+
+            .game-meta {
+                display: flex;
+                justify-content: center;
+                gap: 2rem;
+                margin-bottom: 2rem;
+                flex-wrap: wrap;
+            }
+
+            .meta-item {
+                background: rgba(255, 255, 255, 0.1);
+                padding: 0.5rem 1rem;
+                border-radius: 25px;
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+            }
+
+            .review-content {
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(15px);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                border-radius: 20px;
+                padding: 2rem;
+                margin-bottom: 2rem;
+            }
+
+            .artwork-section {
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+
+            .game-artwork {
+                width: 300px;
+                height: 400px;
+                background: linear-gradient(
+                    45deg,
+                    rgba(255, 255, 255, 0.1),
+                    rgba(255, 255, 255, 0.05)
+                );
+                border-radius: 15px;
+                margin: 0 auto;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 2px dashed rgba(255, 255, 255, 0.3);
+                font-size: 1rem;
+                opacity: 0.7;
+            }
+
+            .review-section {
+                margin-bottom: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+                font-weight: 600;
+                margin-bottom: 1rem;
+                color: #ffe4e1;
+            }
+
+            .rating-section {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .rating-item {
+                background: rgba(255, 255, 255, 0.05);
+                padding: 1rem;
+                border-radius: 10px;
+                text-align: center;
+            }
+
+            .rating-score {
+                font-size: 2rem;
+                font-weight: 700;
+                color: #ffd700;
+            }
+
+            .rating-label {
+                font-size: 0.9rem;
+                opacity: 0.8;
+            }
+
+            .final-score {
+                text-align: center;
+                background: rgba(255, 255, 255, 0.1);
+                padding: 2rem;
+                border-radius: 15px;
+                backdrop-filter: blur(10px);
+            }
+
+            .final-score-number {
+                font-size: 4rem;
+                font-weight: 800;
+                color: #ffd700;
+                text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            }
+
+            @media (max-width: 768px) {
+                .back-button {
+                    position: relative;
+                    top: 0;
+                    left: 0;
+                    margin-bottom: 1rem;
+                    display: inline-block;
+                }
+
+                .game-title {
+                    font-size: 2.5rem;
+                }
+
+                .game-artwork {
+                    width: 250px;
+                    height: 300px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <a href="../nes.html" class="back-button">← Back to all NES reviews</a>
+
+        <div class="container">
+            <div class="header">
+                <h1 class="game-title">Adventures of Lolo</h1>
+                <div class="game-meta">
+                    <span class="meta-item">Nintendo Entertainment System</span>
+                    <span class="meta-item">1989</span>
+                    <span class="meta-item">Puzzle</span>
+                    <span class="meta-item">Completed</span>
+                </div>
+            </div>
+
+            <div class="artwork-section">
+                <div class="game-artwork">Box Art Will Go Here</div>
+            </div>
+
+            <div class="review-content">
+                <div class="review-section">
+                    <h2 class="section-title">Overview</h2>
+                    <p>
+                        TODO: Actually put initial thoughts on the game's
+                        concept, mechanics, and overall experience.
+                    </p>
+                </div>
+
+                <div class="review-section">
+                    <h2 class="section-title">Gameplay</h2>
+                    <p>
+                        TOOD: Detailed analysis of the gameplay mechanics,
+                        controls, difficulty, and overall game feel.
+                    </p>
+                </div>
+
+                <div class="review-section">
+                    <h2 class="section-title">Graphics & Sound</h2>
+                    <p>
+                        TODO: Thoughts on the visual presentation, art style,
+                        music
+                    </p>
+                </div>
+
+                <div class="review-section">
+                    <h2 class="section-title">Story & Characters</h2>
+                    <p>
+                        TODO: Discuss the narrative, character development, and
+                        storytelling elements.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

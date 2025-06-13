@@ -261,14 +261,21 @@
 
         <script>
             // Sample game data structure
+            //
+            // Add NES games here in this format:
+            // {
+            //     title: "xxxx",
+            //     status: "Completed/In-Progress/Gave Up",
+            //     reviewed: true/false,
+            //     reviewFile: "nes/title.html"
+            // }
             const nesGames = [
-                // Add NES games here in this format:
-                // {
-                //     title: "xxxx",
-                //     status: "Completed/In-Progress/Gave Up",
-                //     reviewed: true/false,
-                //     reviewFile: "nes/title.html"
-                // }
+                {
+                    title: "Adventures of Lolo",
+                    status: "Completed",
+                    reviewed: false,
+                    reviewFile: "nes/adventures-of-lolo.html",
+                },
             ];
 
             function loadGames() {
