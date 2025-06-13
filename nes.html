@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>NES Games - NSO Complete</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(
+                    135deg,
+                    #8b0000 0%,
+                    #dc143c 50%,
+                    #ff6347 100%
+                );
+                min-height: 100vh;
+                color: white;
+                position: relative;
+            }
+
+            body::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+                pointer-events: none;
+            }
+
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 2rem;
+                position: relative;
+                z-index: 1;
+            }
+
+            .header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 3rem;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .back-button {
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                color: white;
+                padding: 0.75rem 1.5rem;
+                border-radius: 50px;
+                text-decoration: none;
+                backdrop-filter: blur(10px);
+                transition: all 0.3s ease;
+                font-weight: 500;
+            }
+
+            .back-button:hover {
+                background: rgba(255, 255, 255, 0.2);
+                transform: translateY(-2px);
+            }
+
+            .console-title {
+                text-align: center;
+                flex-grow: 1;
+            }
+
+            .title {
+                font-size: 3rem;
+                font-weight: 800;
+                margin-bottom: 0.5rem;
+                text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+                opacity: 0.9;
+                font-weight: 300;
+            }
+
+            .stats {
+                display: flex;
+                gap: 2rem;
+                justify-content: center;
+                margin-bottom: 3rem;
+                flex-wrap: wrap;
+            }
+
+            .stat-card {
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(10px);
+                padding: 1.5rem;
+                border-radius: 15px;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                text-align: center;
+                min-width: 120px;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+                font-weight: 700;
+                display: block;
+            }
+
+            .stat-label {
+                font-size: 0.9rem;
+                opacity: 0.8;
+            }
+
+            .games-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 2rem;
+                margin-top: 2rem;
+            }
+
+            .game-card {
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(15px);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                border-radius: 15px;
+                padding: 1.5rem;
+                transition: all 0.3s ease;
+                cursor: pointer;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .game-card:hover {
+                transform: translateY(-5px);
+                background: rgba(255, 255, 255, 0.15);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            }
+
+            .game-artwork {
+                width: 100%;
+                height: 200px;
+                background: linear-gradient(
+                    45deg,
+                    rgba(255, 255, 255, 0.1),
+                    rgba(255, 255, 255, 0.05)
+                );
+                border-radius: 10px;
+                margin-bottom: 1rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 2px dashed rgba(255, 255, 255, 0.3);
+                font-size: 0.9rem;
+                opacity: 0.6;
+            }
+
+            .game-title {
+                font-size: 1.3rem;
+                font-weight: 600;
+                margin-bottom: 0.5rem;
+            }
+
+            .game-status {
+                font-size: 0.9rem;
+                opacity: 0.8;
+                margin-bottom: 1rem;
+            }
+
+            .review-button {
+                background: rgba(255, 255, 255, 0.2);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                color: white;
+                padding: 0.5rem 1rem;
+                border-radius: 25px;
+                font-size: 0.9rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                width: 100%;
+            }
+
+            .review-button:hover {
+                background: rgba(255, 255, 255, 0.3);
+            }
+
+            .review-button:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+
+            .empty-state {
+                text-align: center;
+                padding: 4rem 2rem;
+                opacity: 0.8;
+            }
+
+            .empty-state h3 {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+            }
+
+            @media (max-width: 768px) {
+                .header {
+                    flex-direction: column;
+                    text-align: center;
+                }
+
+                .title {
+                    font-size: 2.5rem;
+                }
+
+                .stats {
+                    gap: 1rem;
+                }
+
+                .games-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <a href="index.html" class="back-button">← Back to Home</a>
+                <div class="console-title">
+                    <h1 class="title">Nintendo Entertainment System</h1>
+                </div>
+                <div></div>
+                <!-- Spacer for flexbox -->
+            </div>
+
+            <div class="stats">
+                <div class="stat-card">
+                    <span class="stat-number" id="total-games">0</span>
+                    <span class="stat-label">Total Games</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="completed-games">0</span>
+                    <span class="stat-label">Completed</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="reviewed-games">0</span>
+                    <span class="stat-label">Reviewed</span>
+                </div>
+            </div>
+
+            <div class="games-grid" id="games-grid">
+                <!-- Games will be populated here -->
+            </div>
+
+            <div class="empty-state" id="empty-state">
+                <h3>No game reviews yet!</h3>
+                <p>Game reviews will appear here as they are added.</p>
+            </div>
+        </div>
+
+        <script>
+            // Sample game data structure
+            const nesGames = [
+                // Add NES games here in this format:
+                // {
+                //     title: "xxxx",
+                //     status: "Completed/In-Progress/Gave Up",
+                //     reviewed: true/false,
+                //     reviewFile: "nes/title.html"
+                // }
+            ];
+
+            function loadGames() {
+                const gamesGrid = document.getElementById("games-grid");
+                const emptyState = document.getElementById("empty-state");
+
+                if (nesGames.length === 0) {
+                    emptyState.style.display = "block";
+                    gamesGrid.style.display = "none";
+                    return;
+                }
+
+                emptyState.style.display = "none";
+                gamesGrid.style.display = "grid";
+
+                nesGames.forEach((game) => {
+                    const gameCard = document.createElement("div");
+                    gameCard.className = "game-card";
+                    gameCard.innerHTML = `
+                    <div class="game-artwork">Box Art Placeholder</div>
+                    <h3 class="game-title">${game.title}</h3>
+                    <p class="game-status">Status: ${game.status}</p>
+                    <button class="review-button" onclick="openReview('${game.reviewFile}')"
+                            ${!game.reviewed ? "disabled" : ""}>
+                        ${game.reviewed ? "Read Review" : "Review Coming Soon"}
+                    </button>
+                `;
+                    gamesGrid.appendChild(gameCard);
+                });
+
+                updateStats();
+            }
+
+            function updateStats() {
+                const totalGames = nesGames.length;
+                const completedGames = nesGames.filter(
+                    (game) => game.status === "Completed",
+                ).length;
+                const reviewedGames = nesGames.filter(
+                    (game) => game.reviewed,
+                ).length;
+
+                document.getElementById("total-games").textContent = totalGames;
+                document.getElementById("completed-games").textContent =
+                    completedGames;
+                document.getElementById("reviewed-games").textContent =
+                    reviewedGames;
+            }
+
+            function openReview(reviewFile) {
+                if (reviewFile) {
+                    window.location.href = reviewFile;
+                }
+            }
+
+            // Load games when page loads
+            document.addEventListener("DOMContentLoaded", loadGames);
+        </script>
+    </body>
+</html>
