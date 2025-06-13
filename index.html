@@ -1,1 +1,481 @@
-Hello World
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>PalindromicBreadLoaf.github.io</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
+                overflow-x: hidden;
+                position: relative;
+            }
+
+            body::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+                pointer-events: none;
+            }
+
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 2rem;
+                position: relative;
+                z-index: 1;
+            }
+
+            .header {
+                text-align: center;
+                margin-bottom: 4rem;
+                animation: fadeInDown 1s ease-out;
+            }
+
+            .title {
+                font-size: 3.5rem;
+                font-weight: 800;
+                background: linear-gradient(45deg, #ff6b6b, #87ceeb);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                margin-bottom: 1rem;
+                text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            }
+
+            .subtitle {
+                font-size: 1.3rem;
+                color: rgba(255, 255, 255, 0.9);
+                font-weight: 300;
+                letter-spacing: 0.5px;
+            }
+
+            .console-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+                gap: 2rem;
+                margin-top: 3rem;
+            }
+
+            .console-card {
+                position: relative;
+                padding: 2rem;
+                border-radius: 20px;
+                backdrop-filter: blur(20px);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                cursor: pointer;
+                transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                overflow: hidden;
+                min-height: 180px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            }
+
+            .console-card::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: radial-gradient(
+                    circle at 50% 50%,
+                    rgba(255, 255, 255, 0.15),
+                    rgba(255, 255, 255, 0.05)
+                );
+                z-index: -1;
+                transition: all 0.3s ease;
+            }
+
+            .console-card:hover {
+                transform: translateY(-10px) scale(1.02);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            }
+
+            .console-card:hover::before {
+                background: linear-gradient(
+                    135deg,
+                    rgba(255, 255, 255, 0.2),
+                    rgba(255, 255, 255, 0.1)
+                );
+            }
+
+            .console-name {
+                font-size: 1.8rem;
+                font-weight: 700;
+                margin-bottom: 0.5rem;
+                text-align: center;
+            }
+
+            .console-subtitle {
+                font-size: 1rem;
+                opacity: 0.8;
+                text-align: center;
+                font-weight: 400;
+            }
+
+            /* Console-specific color schemes */
+            .nes {
+                background: linear-gradient(135deg, #8b0000, #dc143c, #ff6347);
+                color: white;
+                --gradient-center: radial-gradient(
+                    circle at var(--gradient-pos, 50% 50%),
+                    rgba(255, 255, 255, 0.25),
+                    rgba(255, 255, 255, 0.05)
+                );
+            }
+
+            .nes::before {
+                background: var(--gradient-center);
+            }
+
+            .gameboy {
+                background: linear-gradient(135deg, #9bbb58, #8baa3c, #0f380f);
+                color: #0f380f;
+                --gradient-center: radial-gradient(
+                    circle at var(--gradient-pos, 50% 50%),
+                    rgba(255, 255, 255, 0.3),
+                    rgba(255, 255, 255, 0.1)
+                );
+            }
+
+            .gameboy::before {
+                background: var(--gradient-center);
+            }
+
+            .snes {
+                background: linear-gradient(135deg, #e6e6fa, #d8bfd8, #9370db);
+                color: #4b0082;
+                --gradient-center: radial-gradient(
+                    circle at var(--gradient-pos, 50% 50%),
+                    rgba(255, 255, 255, 0.35),
+                    rgba(255, 255, 255, 0.1)
+                );
+            }
+
+            .snes::before {
+                background: var(--gradient-center);
+            }
+
+            .n64 {
+                background: linear-gradient(
+                    135deg,
+                    #ffd700,
+                    #ffa500,
+                    #ff4500,
+                    #dc143c,
+                    #8b0000
+                );
+                color: white;
+                --gradient-center: radial-gradient(
+                    circle at var(--gradient-pos, 50% 50%),
+                    rgba(255, 255, 255, 0.25),
+                    rgba(255, 255, 255, 0.05)
+                );
+            }
+
+            .n64::before {
+                background: var(--gradient-center);
+            }
+
+            .gba {
+                background: linear-gradient(135deg, #6a0dad, #4b0082, #8a2be2);
+                color: white;
+                --gradient-center: radial-gradient(
+                    circle at var(--gradient-pos, 50% 50%),
+                    rgba(255, 255, 255, 0.25),
+                    rgba(255, 255, 255, 0.05)
+                );
+            }
+
+            .gba::before {
+                background: var(--gradient-center);
+            }
+
+            .gamecube {
+                background: linear-gradient(135deg, #4169e1, #0000ff, #191970);
+                color: white;
+                --gradient-center: radial-gradient(
+                    circle at var(--gradient-pos, 50% 50%),
+                    rgba(255, 255, 255, 0.25),
+                    rgba(255, 255, 255, 0.05)
+                );
+            }
+
+            .gamecube::before {
+                background: var(--gradient-center);
+            }
+
+            .floating-elements {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                overflow: hidden;
+            }
+
+            .floating-element {
+                position: absolute;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 50%;
+                animation: float 6s ease-in-out infinite;
+            }
+
+            .floating-element:nth-child(1) {
+                width: 80px;
+                height: 80px;
+                top: 20%;
+                left: 10%;
+                animation-delay: 0s;
+            }
+
+            .floating-element:nth-child(2) {
+                width: 60px;
+                height: 60px;
+                top: 60%;
+                right: 15%;
+                animation-delay: 2s;
+            }
+
+            .floating-element:nth-child(3) {
+                width: 100px;
+                height: 100px;
+                bottom: 20%;
+                left: 20%;
+                animation-delay: 4s;
+            }
+
+            @keyframes gradientShift {
+                0%,
+                100% {
+                    background-position: 0% 50%;
+                }
+                50% {
+                    background-position: 100% 50%;
+                }
+            }
+
+            @keyframes fadeInDown {
+                from {
+                    opacity: 0;
+                    transform: translate3d(0, -100%, 0);
+                }
+                to {
+                    opacity: 1;
+                    transform: translate3d(0, 0, 0);
+                }
+            }
+
+            @keyframes float {
+                0%,
+                100% {
+                    transform: translateY(0px) rotate(0deg);
+                }
+                33% {
+                    transform: translateY(-20px) rotate(120deg);
+                }
+                66% {
+                    transform: translateY(10px) rotate(240deg);
+                }
+            }
+
+            .console-card {
+                animation: fadeInUp 0.8s ease-out forwards;
+                opacity: 0;
+            }
+
+            .console-card:nth-child(1) {
+                animation-delay: 0.1s;
+            }
+            .console-card:nth-child(2) {
+                animation-delay: 0.2s;
+            }
+            .console-card:nth-child(3) {
+                animation-delay: 0.3s;
+            }
+            .console-card:nth-child(4) {
+                animation-delay: 0.4s;
+            }
+            .console-card:nth-child(5) {
+                animation-delay: 0.5s;
+            }
+            .console-card:nth-child(6) {
+                animation-delay: 0.6s;
+            }
+
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translate3d(0, 40px, 0);
+                }
+                to {
+                    opacity: 1;
+                    transform: translate3d(0, 0, 0);
+                }
+            }
+
+            @media (max-width: 768px) {
+                .title {
+                    font-size: 2.5rem;
+                }
+
+                .console-grid {
+                    grid-template-columns: 1fr;
+                    gap: 1.5rem;
+                }
+
+                .container {
+                    padding: 1rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="floating-elements">
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+        </div>
+
+        <div class="container">
+            <div class="header">
+                <h1 class="title">
+                    A Review of Every Game Available on Nintendo Switch Online
+                </h1>
+                <p class="subtitle">
+                    A Journey Through Nintendo Switch Online's Complete Library
+                </p>
+            </div>
+
+            <div class="console-grid">
+                <div
+                    class="console-card nes"
+                    onclick="navigateToConsole('nes')"
+                >
+                    <h2 class="console-name">Nintendo Entertainment System</h2>
+                    <p class="console-subtitle">(3)</p>
+                </div>
+
+                <div
+                    class="console-card gameboy"
+                    onclick="navigateToConsole('gameboy')"
+                >
+                    <h2 class="console-name">Game Boy</h2>
+                    <p class="console-subtitle">(0)</p>
+                </div>
+
+                <div
+                    class="console-card snes"
+                    onclick="navigateToConsole('snes')"
+                >
+                    <h2 class="console-name">
+                        Super Nintendo Entertainment System
+                    </h2>
+                    <p class="console-subtitle">(0)</p>
+                </div>
+
+                <div
+                    class="console-card n64"
+                    onclick="navigateToConsole('n64')"
+                >
+                    <h2 class="console-name">Nintendo 64</h2>
+                    <p class="console-subtitle">(0)</p>
+                </div>
+
+                <div
+                    class="console-card gba"
+                    onclick="navigateToConsole('gba')"
+                >
+                    <h2 class="console-name">Game Boy Advance</h2>
+                    <p class="console-subtitle">(0)</p>
+                </div>
+
+                <div
+                    class="console-card gamecube"
+                    onclick="navigateToConsole('gamecube')"
+                >
+                    <h2 class="console-name">GameCube</h2>
+                    <p class="console-subtitle">(0)</p>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function navigateToConsole(console) {
+                // Add a cool click effect
+                event.target.style.transform = "scale(0.95)";
+                setTimeout(() => {
+                    event.target.style.transform = "";
+                }, 150);
+
+                // TODO: Actually implement all this. For now, just show an alert
+                setTimeout(() => {
+                    alert(
+                        `Navigating to ${console.toUpperCase()} section! (This will be implemented later)`,
+                    );
+                }, 200);
+            }
+
+            // Add some interactive particle effects on mouse move
+            document.addEventListener("mousemove", (e) => {
+                const cards = document.querySelectorAll(".console-card");
+                cards.forEach((card) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    if (
+                        x >= 0 &&
+                        x <= rect.width &&
+                        y >= 0 &&
+                        y <= rect.height
+                    ) {
+                        const centerX = rect.width / 2;
+                        const centerY = rect.height / 2;
+                        const rotateX = (y - centerY) / 10;
+                        const rotateY = (centerX - x) / 10;
+
+                        const xPercent = (x / rect.width) * 100;
+                        const yPercent = (y / rect.height) * 100;
+
+                        const beforeElement =
+                            card.querySelector("::before") || card;
+                        card.style.setProperty("--mouse-x", `${xPercent}%`);
+                        card.style.setProperty("--mouse-y", `${yPercent}%`);
+
+                        // Update the gradient position
+                        card.style.setProperty(
+                            "--gradient-pos",
+                            `${xPercent}% ${yPercent}%`,
+                        );
+
+                        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px) scale(1.02)`;
+                    }
+                });
+            });
+
+            document.addEventListener("mouseleave", () => {
+                const cards = document.querySelectorAll(".console-card");
+                cards.forEach((card) => {
+                    card.style.transform = "";
+                });
+            });
+        </script>
+    </body>
+</html>
